@@ -18,13 +18,13 @@ config.read('config.ini')
 raw_response = {}
 
 try:
-    #Connecting with MongoDB
-    mongo_client = pymongo.MongoClient(f"mongodb://{config['MONGO']['HOSTNAME']}:{config['MONGO']['PORT']}/",username=config['MONGO']['USERNAME'],password=config['MONGO']['PASSWORD'])
-    mongo_db = mongo_client[config['MONGO']['DBNAME']] #databasename
-    mongo_page_collections = mongo_db["google_campaign_ad_group"] #collectionname
+    # Connecting with MongoDB
+    mongo_client = pymongo.MongoClient(f"mongodb://{config['MONGO']['HOSTNAME']}:{config['MONGO']['PORT']}/",
+                                       username=config['MONGO']['USERNAME'], password=config['MONGO']['PASSWORD'])
+    mongo_db = mongo_client[config['MONGO']['DBNAME']]  # databasename
+    mongo_page_collections = mongo_db["google_campaign_ad_group"]  # collectionname
 except Exception as e:
     logging.error(f"Connection error with Mongo:: {str(e)}", exc_info=True)
-
 
 brand_id = 'e2fd950a-19f7-4722-a78e-79bd5b94a802'
 current_date = datetime.datetime.today().date()
@@ -76,17 +76,17 @@ response = requests.post(api_url, headers=headers, data=request_param)
 campaign_response = response.json()
 data_list = campaign_response[0]['results']
 
-    a = {
-        'page_id': page_id,
-        'business_account_id': facebook_account_id,
-        'company_id': each_account['company_id'],
-        'user_id': each_account['user_id'],
-        'brand_id': brand_id,
-        'brand_name': each_account['brand_name'],
-        'company_name': each_account['company_name'],
-        'data_date': datetime.now(),
-        'api_response': insta_response,
-    }
+# a = {
+#     'page_id': page_id,
+#     'business_account_id': facebook_account_id,
+#     'company_id': each_account['company_id'],
+#     'user_id': each_account['user_id'],
+#     'brand_id': brand_id,
+#     'brand_name': each_account['brand_name'],
+#     'company_name': each_account['company_name'],
+#     'data_date': datetime.now(),
+#     'api_response': insta_response,
+# }
 
 for each_data in data_list:
     customers = each_data.get('customer')
@@ -102,5 +102,3 @@ for each_data in data_list:
     save_google_campaign(customers, campaigns, brand_id)
     save_google_ad_group(customers, campaigns, ad_group, brand_id)
     save_google_ad(customers, campaigns, ad_group, metrics, ad_group_ad, segments, brand_id)
-
-
