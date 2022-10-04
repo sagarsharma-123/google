@@ -29,7 +29,7 @@ except Exception as e:
 brand_id = 'e2fd950a-19f7-4722-a78e-79bd5b94a802'
 current_date = datetime.datetime.today().date()
 until_date = str(current_date)
-since_date = str(current_date - datetime.timedelta(days=30))
+since_date = str(current_date - datetime.timedelta(days=120))
 print(since_date, until_date)
 
 refresh_token = '1//0gqNTH5me-wJeCgYIARAAGBASNwF-L9IrT87kqxbhLdPMR4GdC0gnLWM8ECWHaom0eCXfD-' \
@@ -76,18 +76,6 @@ response = requests.post(api_url, headers=headers, data=request_param)
 campaign_response = response.json()
 data_list = campaign_response[0]['results']
 
-# a = {
-#     'page_id': page_id,
-#     'business_account_id': facebook_account_id,
-#     'company_id': each_account['company_id'],
-#     'user_id': each_account['user_id'],
-#     'brand_id': brand_id,
-#     'brand_name': each_account['brand_name'],
-#     'company_name': each_account['company_name'],
-#     'data_date': datetime.now(),
-#     'api_response': insta_response,
-# }
-
 for each_data in data_list:
     customers = each_data.get('customer')
     campaigns = each_data.get('campaign')
@@ -99,6 +87,6 @@ for each_data in data_list:
     keyword_view = each_data.get('keywordView')
     segment_date = segments.get('date')
 
-    save_google_campaign(customers, campaigns, brand_id)
+    # save_google_campaign(customers, campaigns, brand_id)
     save_google_ad_group(customers, campaigns, ad_group, brand_id)
-    save_google_ad(customers, campaigns, ad_group, metrics, ad_group_ad, segments, brand_id)
+    # save_google_ad(customers, campaigns, ad_group, metrics, ad_group_ad, segments, brand_id)

@@ -3,7 +3,7 @@ import json
 
 import requests
 
-from googleAds.utils import save_google_ad_search_keyword
+from utils import save_google_ad_search_keyword
 
 # open_file = open("/home/sagar/Desktop/sagar sharma/googleAd/sample_response/searchAd.json", "r")
 # json_response = json.load(open_file)
@@ -13,7 +13,7 @@ brand_id = 'e2fd950a-19f7-4722-a78e-79bd5b94a802'
 brand_id = 'e2fd950a-19f7-4722-a78e-79bd5b94a802'
 current_date = datetime.datetime.today().date()
 until_date = str(current_date)
-since_date = str(current_date - datetime.timedelta(days=30))
+since_date = str(current_date - datetime.timedelta(days=120))
 print(since_date, until_date)
 
 refresh_token = '1//0gqNTH5me-wJeCgYIARAAGBASNwF-L9IrT87kqxbhLdPMR4GdC0gnLWM8ECWHaom0eCXfD-' \
@@ -52,9 +52,9 @@ ad_query = f"SELECT campaign.status, campaign.end_date, campaign.advertising_cha
 request_param = {"query": ad_query}
 response = requests.post(api_url, headers=headers, data=request_param)
 campaign_response = response.json()
+print(campaign_response)
 data_list = campaign_response[0]['results']
-# print(campaign_response,type(campaign_response))
-# exit()
+
 
 for each_data in data_list:
     customers = each_data.get('customer')
