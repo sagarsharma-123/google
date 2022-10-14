@@ -40,6 +40,15 @@ def execute_query(sql_query):
         logging.error(f"Query Execution Error with pgSQL:: {str(e)}, sql query :: {sql_query}", exc_info=True)
 
 
+def execute_query_to_fetch(sql_query):
+    pg_cur = pg_conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    pg_cur.execute(sql_query)
+    brands = pg_cur.fetchall()
+    return brands
+
+
+
+
 def save_google_campaign(customers, campaigns, brand_id):
     resource_name_customer = ''
     google_customer_id = ''
